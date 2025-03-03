@@ -10,9 +10,7 @@ import {
 
 export default function WelcomeScreen() {
   const handleStart = () => {
-    router.navigate("./two", {
-      relativeToDirectory: true,
-    });
+    router.navigate("/menu");
   };
 
   return (

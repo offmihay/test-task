@@ -11,7 +11,8 @@ const RoutesLayout = () => {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="two" />
+      <Stack.Screen name="menu" />
+      <Stack.Screen name="game/[id]" />
     </Stack>
   );
 };
