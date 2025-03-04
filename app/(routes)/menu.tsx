@@ -16,7 +16,7 @@ export default function MenuScreen() {
 
   return (
     <ImageBackground
-      source={require("@/assets/images/bg/bg_1.png")}
+      source={require("@/assets/images/bg/bg_3.png")}
       resizeMode="cover"
       style={{ flex: 1 }}
     >

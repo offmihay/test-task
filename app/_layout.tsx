@@ -9,8 +9,18 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/firebaseConfig";
 export { ErrorBoundary } from "expo-router";
 import appsFlyer from "react-native-appsflyer";
+import AsyncStorage, {
+  useAsyncStorage,
+} from "@react-native-async-storage/async-storage";
+import games from "@/constants/games";
+import { GameStatsProvider } from "@/components/GameStatsProvider";
 
 SplashScreen.preventAutoHideAsync();
+
+export type GameStat = {
+  id: string;
+  success: boolean;
+};
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -19,15 +29,10 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
-
       const firebaseApp = initializeApp(firebaseConfig);
-      console.log("firebaseApp SDK: ", firebaseApp);
+      // console.log("firebaseApp SDK: ", firebaseApp);
 
       OneSignal.Debug.setLogLevel(LogLevel.Verbose);
       OneSignal.initialize("YOUR-ONESIGNAL-APP-ID");
@@ -40,7 +45,7 @@ export default function RootLayout() {
           appId: "fake1234",
         },
         (result) => {
-          console.log("appsFlyer SDK status: ", result);
+          // console.log("appsFlyer SDK status: ", result);
         },
         (error) => {
           console.error(error);
@@ -53,13 +58,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
   return (
-    <Stack>
-      <Stack.Screen name="(routes)" options={{ headerShown: false }} />
-    </Stack>
+    <GameStatsProvider>
+      <Stack>
+        <Stack.Screen name="(routes)" options={{ headerShown: false }} />
+      </Stack>
+    </GameStatsProvider>
   );
 }

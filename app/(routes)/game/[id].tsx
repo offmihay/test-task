@@ -9,12 +9,14 @@ import {
   Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import games, { Asset, Game } from "@/constants/games";
 import ModalContent from "@/components/Modal";
+import { useGame } from "@/components/GameStatsProvider";
 
 const GameScreen = () => {
   const { id } = useLocalSearchParams();
+  const { updateGameStat } = useGame();
 
   const [game, setGame] = useState<Game | null>(null);
   const cardWidth = game && (Dimensions.get("window").width - 80) / game.rows;
@@ -63,8 +65,14 @@ const GameScreen = () => {
     ].sort(() => 0.5 - Math.random());
   };
 
+  const handleWin = async () => {
+    setGameResult("win");
+    game && updateGameStat(game.id);
+  };
+
   const handlePick = (index: number) => {
     if (
+      !game ||
       !gameState ||
       !isPlaying ||
       gameState[index].isSelected ||
@@ -85,10 +93,10 @@ const GameScreen = () => {
     if (newSelectedCards.length === 2) {
       const [firstIndex, secondIndex] = newSelectedCards;
 
-      if (gameState[firstIndex].id === gameState[secondIndex].id) {
+      if (newGameState[firstIndex].id === newGameState[secondIndex].id) {
         setSelectedCards([]);
         if (newGameState.every((card) => card.isSelected)) {
-          setGameResult("win");
+          handleWin();
           setIsPlaying(false);
         }
       } else {
