@@ -22,7 +22,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.offmihay.task3"
+      "package": "com.offmihay.task3",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -31,7 +35,10 @@
     },
     "plugins": [
       "expo-router",
-      ["react-native-appsflyer", {}],
+      [
+        "react-native-appsflyer",
+        {}
+      ],
       [
         "onesignal-expo-plugin",
         {
@@ -47,6 +54,32 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "OneSignalNotificationServiceExtension",
+                  "bundleIdentifier": "com.offmihay.task3.OneSignalNotificationServiceExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.com.offmihay.task3.onesignal"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "2dcd1441-8ab2-4f28-a42c-a4e5a8fed4df"
+      }
+    },
+    "owner": "offmihay"
   }
 }
