@@ -4,18 +4,12 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { LogLevel, OneSignal } from "react-native-onesignal";
+import { initializeApp } from "firebase/app";
+import firebaseConfig from "@/firebaseConfig";
+export { ErrorBoundary } from "expo-router";
+import appsFlyer from "react-native-appsflyer";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -24,7 +18,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -32,6 +25,27 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+
+      const firebaseApp = initializeApp(firebaseConfig);
+      console.log("firebaseApp SDK: ", firebaseApp);
+
+      OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+      OneSignal.initialize("YOUR-ONESIGNAL-APP-ID");
+      OneSignal.Notifications.requestPermission(true); // test
+
+      appsFlyer.initSdk(
+        {
+          devKey: "fake123",
+          isDebug: true,
+          appId: "fake1234",
+        },
+        (result) => {
+          console.log("appsFlyer SDK status: ", result);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
     }
   }, [loaded]);
 
