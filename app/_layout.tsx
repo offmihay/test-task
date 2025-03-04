@@ -9,10 +9,6 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/firebaseConfig";
 export { ErrorBoundary } from "expo-router";
 import appsFlyer from "react-native-appsflyer";
-import AsyncStorage, {
-  useAsyncStorage,
-} from "@react-native-async-storage/async-storage";
-import games from "@/constants/games";
 import { GameStatsProvider } from "@/components/GameStatsProvider";
 
 SplashScreen.preventAutoHideAsync();

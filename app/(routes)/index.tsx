@@ -11,6 +11,7 @@ import {
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 import * as WebBrowser from "expo-web-browser";
+import DefaultBtn from "@/components/DefaultBtn";
 
 export default function WelcomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,30 +46,38 @@ export default function WelcomeScreen() {
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
-        <Image
-          source={require("@/assets/images/app/logo.png")}
-          resizeMode="cover"
-          style={styles.logo}
-        />
-        <TouchableOpacity onPress={handleStart}>
-          <Text style={{ fontSize: 40 }}>Start</Text>
-        </TouchableOpacity>
+        <View style={styles.logo}>
+          <Image
+            source={require("@/assets/images/app/logo.png")}
+            resizeMode="cover"
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
       </View>
       {isLoading && (
         <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" />
         </View>
       )}
+      <View style={styles.btnContainer}>
+        <DefaultBtn onPress={handleStart}>
+          <Text style={{ fontSize: 20, color: "white", letterSpacing: 1.5 }}>
+            START
+          </Text>
+        </DefaultBtn>
+      </View>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 50,
+    marginBottom: 100,
   },
 
   indicatorContainer: {
@@ -79,7 +88,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  btnContainer: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingBottom: 90,
+  },
+
   logo: {
     width: 250,
+    height: 250,
   },
 });
