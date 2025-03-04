@@ -37,7 +37,7 @@ const games: Game[] = [
     name: "Game 2",
     image: require("../assets/images/app/games/game2.png"),
     bgImage: require("../assets/images/app/games/bg2.png"),
-    rows: 3,
+    rows: 2,
     assets: [
       {
         id: "1",

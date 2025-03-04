@@ -92,11 +92,9 @@ const GameScreen = () => {
           setIsPlaying(false);
         }
       } else {
-        setTimeout(() => {
-          setSelectedCards([]);
-          setIsPlaying(false);
-          setGameResult("lose");
-        }, 500);
+        setSelectedCards([]);
+        setIsPlaying(false);
+        setGameResult("lose");
       }
     }
   };
@@ -161,20 +159,19 @@ const GameScreen = () => {
           ))}
         </View>
       </View>
-      <Modal visible={!!gameResult} transparent={true}>
-        {gameResult === "win" ? (
-          <ModalContent
-            type="win"
-            onActionPress={handleGoNext}
-            onHomePress={handleGoMenu}
-          />
-        ) : (
-          <ModalContent
-            type="lose"
-            onActionPress={restartGame}
-            onHomePress={handleGoMenu}
-          />
-        )}
+      <Modal visible={gameResult === "win"} transparent={true}>
+        <ModalContent
+          type="win"
+          onActionPress={handleGoNext}
+          onHomePress={handleGoMenu}
+        />
+      </Modal>
+      <Modal visible={gameResult === "lose"} transparent={true}>
+        <ModalContent
+          type="lose"
+          onActionPress={restartGame}
+          onHomePress={handleGoMenu}
+        />
       </Modal>
     </ImageBackground>
   );
