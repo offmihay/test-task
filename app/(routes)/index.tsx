@@ -21,7 +21,7 @@ export default function WelcomeScreen() {
   const handleStart = async () => {
     setIsLoading(true);
     const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status === Location.PermissionStatus.DENIED) {
+    if (status !== Location.PermissionStatus.GRANTED) {
       setIsLoading(false);
       return;
     }

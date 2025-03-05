@@ -28,7 +28,7 @@ export default function RootLayout() {
     if (loaded) {
       SplashScreen.hideAsync();
       const firebaseApp = initializeApp(firebaseConfig);
-      // console.log("firebaseApp SDK: ", firebaseApp);
+      console.log("firebaseApp SDK: ", firebaseApp);
 
       OneSignal.Debug.setLogLevel(LogLevel.Verbose);
       OneSignal.initialize("YOUR-ONESIGNAL-APP-ID");
@@ -41,7 +41,7 @@ export default function RootLayout() {
           appId: "fake1234",
         },
         (result) => {
-          // console.log("appsFlyer SDK status: ", result);
+          console.log("appsFlyer SDK status: ", result);
         },
         (error) => {
           console.error(error);
